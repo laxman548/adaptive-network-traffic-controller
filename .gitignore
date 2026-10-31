@@ -1,0 +1,10 @@
+# CMake generated files
+build/
+
+# Compiled executables
+*.exe
+*.o
+*.obj
+
+# IDE files
+.vscode/
