@@ -1,7 +1,9 @@
+
 #include "RoutingEngine.h"
 
 #include <limits>
 
+// Adaptive Routing: Find the least-loaded healthy server
 int findLeastLoadedServer(const vector<Server>& servers) {
 
     // Step 1: Initialize minimum score to infinity
@@ -13,8 +15,8 @@ int findLeastLoadedServer(const vector<Server>& servers) {
     // Step 3: Iterate through all servers
     for (int i = 0; i < servers.size(); i++) {
 
-        // Step 4: Skip unhealthy servers
-        if (!servers[i].healthy) {
+        // Step 4: Skip unhealthy and recovering servers
+        if (servers[i].healthStatus != HealthStatus::HEALTHY) {
             continue;
         }
 
@@ -36,9 +38,10 @@ int findLeastLoadedServer(const vector<Server>& servers) {
 
     // Step 8: Return selected server index
     return selectedServer;
- 
 }
 
+
+// Round Robin: Find the next healthy server
 int findNextRoundRobinServer(
     const vector<Server>& servers,
     int& currentIndex
@@ -61,8 +64,8 @@ int findNextRoundRobinServer(
 
         int index = (currentIndex + i) % totalServers;
 
-        // Step 4: Skip unhealthy servers
-        if (!servers[index].healthy) {
+        // Step 4: Skip unhealthy and recovering servers
+        if (servers[index].healthStatus != HealthStatus::HEALTHY) {
             continue;
         }
 
